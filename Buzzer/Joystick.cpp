@@ -4,29 +4,23 @@ int centerValue(int value, int offset = 0) {
     return constrain((value - JOYSTICK_CENTER) + offset, -511, 511);
 }
 
-Joystick::Joystick(uint8_t pinX, uint8_t pinY, uint8_t pinButton, bool centered) {
-    this->pinX = pinX;
-    this->pinY = pinY;
+Joystick::Joystick(
+        uint8_t pinX,
+        uint8_t pinY,
+        uint8_t pinButton
+    )
+        : potX(pinX), potY(pinY)
+    {
     this->pinButton = pinButton;
-    this->adjustmentX = 0;
-    this->adjustmentY = 0;
-    this->isCentered = centered;
-    this->invertX = false;
-    this->invertY = false;
-
     pinMode(pinButton, INPUT);
 }
 
 int Joystick::getX() {
-    int reading = analogRead(pinX);
-    int result = isCentered ? centerValue(reading, adjustmentX) : reading;
-    return invertX ? (1023 - result) : result;
+    return potX.getValue();
 }
 
 int Joystick::getY() {
-    int reading = analogRead(pinY);
-    int result = isCentered ? centerValue(reading, adjustmentY) : reading;
-    return invertY ? (1023 - result) : result;
+    return potY.getValue();
 }
 
 bool Joystick::isButtonPressed() {
@@ -34,20 +28,19 @@ bool Joystick::isButtonPressed() {
 }
 
 void Joystick::setAdjustmentX(int val) {
-    this->adjustmentX = val;
+    potX.setAdjustment(val);
 }
 void Joystick::setAdjustmentY(int val) {
-    this->adjustmentY = val;
+    potY.setAdjustment(val);
 }
 
 void Joystick::setInvertX(bool val) {
-    this->invertX = val;
+    potX.setInverted(val);
 }
 
 void Joystick::setInvertY(bool val) {
-    this->invertY = val;
+    potY.setInverted(val);
 }
-
 
 void Joystick::loadValues(int* toLoad[3]) {
     *toLoad[0] = getX();

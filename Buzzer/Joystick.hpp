@@ -2,22 +2,18 @@
 #define JOYSTICK_CLASS
 
 #include <Arduino.h>
+#include "Potentiometer.hpp"
 
 #define JOYSTICK_CENTER 511
 
 class Joystick {
     private:
-        uint8_t pinX;
-        uint8_t pinY;
+        Potentiometer potX;
+        Potentiometer potY;
         uint8_t pinButton;
-        int adjustmentX;
-        int adjustmentY;
-        bool isCentered;
-        bool invertX;
-        bool invertY;
 
     public:
-        Joystick(uint8_t pinX, uint8_t pinY, uint8_t pinButton, bool centered);
+        Joystick(uint8_t pinX, uint8_t pinY, uint8_t pinButton);
         int getX();
         int getY();
         bool isButtonPressed();

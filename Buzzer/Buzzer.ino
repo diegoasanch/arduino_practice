@@ -8,7 +8,7 @@ const int pin_joystick_btn = 2;
 const int btn_pin = 3;
 const int buzzer_pin = 6;
 
-Joystick ctrl(pin_joystick_x, pin_joystick_y, pin_joystick_btn, false);
+Joystick ctrl(pin_joystick_x, pin_joystick_y, pin_joystick_btn);
 ButtonToggle button(btn_pin);
 Led light(7);
 
@@ -19,7 +19,7 @@ void setup() {
     // Serial.begin(9600);
     ctrl.setAdjustmentX(-4);
     ctrl.setAdjustmentY(-27);
-    ctrl.setInvertY(true);
+    // ctrl.setInvertY(true);
 }
 
 void loop() {
